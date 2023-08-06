@@ -3,7 +3,7 @@ name: 构建和部署 VitePress 网站到 GitHub Pages
 on:
   push:
     branches:
-      - main
+      - master
 
   workflow_dispatch:
 
