@@ -1,0 +1,34 @@
+name: 构建和部署 VitePress 网站到 GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 如果没有启用 lastUpdated 可以省略这一行
+      - name: 设置 Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.0' # 或者您喜欢的 Node.js 版本
+      - name: 安装 pnpm
+        run: npm install -g pnpm
+      - name: 安装依赖项
+        run: pnpm install
+      - name: 使用 VitePress 构建
+        run: pnpm run docs:build
+      - name: 上传构建结果
+        uses: actions/upload-artifact@v2
+        with:
+          name: vitepress-dist
+          path: docs/.vitepress/dist
+
+
